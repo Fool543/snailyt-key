@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .hidden {
+            display: none;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Key Display Page</h1>
+    <p id="key-container" class="hidden">
+        Your key: <span id="display-key"></span>
+    </p>
+    <button id="copy-button" class="hidden">Copy Key</button>
+    <p id="error-message" class="hidden">No key provided in the URL.</p>
+
+    <script>
+        // Function to get query parameters
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Get the 'key' parameter from the URL
+        const key = getQueryParameter('key');
+        const keyContainer = document.getElementById('key-container');
+        const keyDisplay = document.getElementById('display-key');
+        const copyButton = document.getElementById('copy-button');
+        const errorMessage = document.getElementById('error-message');
+
+        if (key) {
+            // Display the key if it exists in the URL
+            keyDisplay.textContent = key;
+            keyContainer.classList.remove('hidden');
+            copyButton.classList.remove('hidden');
+        } else {
+            // Show error message if no key is provided
+            errorMessage.textContent = "No key provided in the URL.";
+            errorMessage.classList.remove('hidden');
+        }
+
+        // Copy key to clipboard
+        copyButton.addEventListener('click', () => {
+            navigator.clipboard.writeText(key).then(() => {
+                alert("Key copied to clipboard!");
+            }).catch(err => {
+                alert("Failed to copy key: " + err);
+            });
+        });
+    </script>
+</body>
+</html>
