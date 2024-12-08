@@ -21,12 +21,12 @@
     </style>
 </head>
 <body>
-    <h1>Key Display Page</h1>
+    <h1>SNAILYT SECURE KEY LOGIN</h1>
     <p id="key-container" class="hidden">
         Your key: <span id="display-key"></span>
     </p>
     <button id="copy-button" class="hidden">Copy Key</button>
-    <p id="error-message" class="hidden">No key provided in the URL.</p>
+    <p id="error-message" class="hidden">Unknown error . Pls retry</p>
 
     <script>
         // Function to get query parameters
@@ -49,7 +49,7 @@
             copyButton.classList.remove('hidden');
         } else {
             // Show error message if no key is provided
-            errorMessage.textContent = "No key provided in the URL.";
+            errorMessage.textContent = "Unknown error . Pls retry";
             errorMessage.classList.remove('hidden');
         }
 
