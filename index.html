@@ -7,17 +7,21 @@
 </head>
 <body>
   <script>
+    // Map file names to their download links
     const fileMap = {
       "X1.dll": "https://www.dropbox.com/scl/fi/u7v3kvsdf6r613f6jt06v/Memory.dll?rlkey=mrwurng4qos1qlwm3vygigp2n&st=spkk7a93&dl=1",
       "X2.dll": "https://github.com/yourusername/dll-hosting/releases/download/v1.0/another.dll"
     };
 
+    // Get the file name from the query string
     const urlParams = new URLSearchParams(window.location.search);
     const fileName = urlParams.get('file');
 
+    // If the file exists in the map, redirect to the download link
     if (fileName && fileMap[fileName]) {
       window.location.href = fileMap[fileName];
     } else {
+      // If the file is not found, show an error message
       document.body.innerHTML = `
         <h1>File Not Found</h1>
         <p>Ensure you have provided the correct file name in the query parameter.</p>
