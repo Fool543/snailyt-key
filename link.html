@@ -7,16 +7,33 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
             text-align: center;
             margin-top: 50px;
         }
         .hidden {
             display: none;
         }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 30px;
+        }
+        p {
+            font-size: 2em;
+            margin: 20px 0;
+        }
         button {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 20px 40px;
+            font-size: 2em;
             cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            background-color: #007BFF;
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -26,7 +43,7 @@
         Your key: <span id="display-key"></span>
     </p>
     <button id="copy-button" class="hidden">Copy Key</button>
-    <p id="error-message" class="hidden">Unknown error . Pls retry</p>
+    <p id="error-message" class="hidden">Unknown error. Please retry.</p>
 
     <script>
         // Function to get query parameters
@@ -49,16 +66,14 @@
             copyButton.classList.remove('hidden');
         } else {
             // Show error message if no key is provided
-            errorMessage.textContent = "Unknown error . Pls retry";
+            errorMessage.textContent = "Unknown error. Please retry.";
             errorMessage.classList.remove('hidden');
         }
 
         // Copy key to clipboard
         copyButton.addEventListener('click', () => {
-            navigator.clipboard.writeText(key).then(() => {
-                alert("Key copied to clipboard!");
-            }).catch(err => {
-                alert("Failed to copy key: " + err);
+            navigator.clipboard.writeText(key).catch(err => {
+                console.error("Failed to copy key: " + err);
             });
         });
     </script>
