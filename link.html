@@ -35,6 +35,11 @@
         button:hover {
             background-color: #0056b3;
         }
+        #log {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: #00FF00;
+        }
     </style>
 </head>
 <body>
@@ -44,6 +49,7 @@
     </p>
     <button id="copy-button" class="hidden">Copy Key</button>
     <p id="error-message" class="hidden">Unknown error. Please retry.</p>
+    <p id="log" class="hidden"></p>
 
     <script>
         // Function to get query parameters
@@ -58,6 +64,7 @@
         const keyDisplay = document.getElementById('display-key');
         const copyButton = document.getElementById('copy-button');
         const errorMessage = document.getElementById('error-message');
+        const logMessage = document.getElementById('log');
 
         if (key) {
             // Display the key if it exists in the URL
@@ -72,7 +79,10 @@
 
         // Copy key to clipboard
         copyButton.addEventListener('click', () => {
-            navigator.clipboard.writeText(key).catch(err => {
+            navigator.clipboard.writeText(key).then(() => {
+                logMessage.textContent = "Key copied to clipboard!";
+                logMessage.classList.remove('hidden');
+            }).catch(err => {
                 console.error("Failed to copy key: " + err);
             });
         });
