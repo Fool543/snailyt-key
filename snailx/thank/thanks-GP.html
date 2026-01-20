@@ -5,82 +5,211 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
   <title>Thank You!</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Poppins to match previous page aesthetic -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
     body {
-      font-family: 'Nunito', sans-serif;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #121212;
-      background-image: 
-        linear-gradient(135deg, #1e1e1e 25%, transparent 25%),
-        linear-gradient(225deg, #1e1e1e 25%, transparent 25%),
-        linear-gradient(45deg, #1a1a1a 25%, transparent 25%),
-        linear-gradient(315deg, #1a1a1a 25%, #121212 25%);
-      background-size: 60px 60px;
-      color: #f1f1f1;
+      background: #0f0f0f;
+      color: #fff;
+      padding: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Soft cyber glow backdrop */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(0, 255, 255, 0.08), transparent 45%),
+        radial-gradient(circle at 80% 30%, rgba(255, 0, 255, 0.08), transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(0, 255, 208, 0.06), transparent 50%);
+      filter: blur(0px);
+      z-index: 0;
+    }
+
+    /* Subtle grid / texture */
+    body::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 70px 70px;
+      opacity: 0.25;
+      z-index: 0;
     }
 
     .container {
-      background: #1f1f1f;
-      border-radius: 16px;
-      padding: 50px 40px;
+      position: relative;
+      z-index: 1;
+      background-color: rgba(24, 24, 24, 0.9);
+      backdrop-filter: blur(12px);
+      border-radius: 22px;
+      padding: 46px 36px;
       max-width: 600px;
-      width: 90%;
-      box-shadow:
-        0 2px 4px rgba(0, 0, 0, 0.3),
-        0 6px 20px rgba(0, 0, 0, 0.4);
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65);
       text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      animation: fadeIn 0.9s ease-in-out;
     }
 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Neon header like the first page */
     h1 {
-      font-size: 2.4em;
-      color: #bb86fc;
-      margin-bottom: 20px;
-      font-weight: 700;
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #00ffff, #ff00ff, #00ffff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 16px rgba(0, 255, 255, 0.08);
     }
 
     p {
-      font-size: 1.15em;
-      color: #d0d0d0;
-      line-height: 1.6;
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.86);
+      line-height: 1.75;
+      margin-bottom: 26px;
     }
 
-    .footer {
-      position: absolute;
-      bottom: 20px;
-      font-size: 0.9em;
-      color: #aaaaaa;
-    }
-
-    .footer a {
-      color: #bb86fc;
-      text-decoration: none;
+    .accent {
+      color: #00ffd0;
       font-weight: 600;
     }
 
+    /* Action buttons (optional) */
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .buttons a {
+      background-color: #222;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 13px 18px;
+      border-radius: 50px;
+      font-size: 14.5px;
+      font-weight: 650;
+      transition: all 0.3s ease;
+      border: 1px solid #444;
+      display: inline-block;
+    }
+
+    .buttons a:hover {
+      background-color: #333;
+      color: #00ffff;
+      transform: translateY(-2px);
+      box-shadow: 0 0 14px rgba(0, 255, 255, 0.18);
+    }
+
+    /* Primary neon button */
+    .primary-btn {
+      background: linear-gradient(135deg, #ff00ff, #00ffff, #ff00ff);
+      background-size: 300% 300%;
+      animation: neonShift 5s ease infinite;
+      border: 2px solid rgba(0, 255, 255, 0.9);
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 0 14px rgba(255, 0, 255, 0.35);
+      font-size: 15px;
+      letter-spacing: 0.4px;
+    }
+
+    .primary-btn:hover {
+      transform: scale(1.02) translateY(-2px);
+      box-shadow:
+        0 0 22px rgba(255, 0, 255, 0.35),
+        0 0 34px rgba(0, 255, 255, 0.25);
+    }
+
+    @keyframes neonShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 18px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.65);
+      z-index: 1;
+    }
+
+    .footer a {
+      color: #00ffd0;
+      text-decoration: none;
+      font-weight: 650;
+      transition: color 0.2s ease;
+    }
+
     .footer a:hover {
+      color: #00ffff;
       text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 32px 22px;
+      }
+      h1 {
+        font-size: 1.9rem;
+      }
+      p {
+        font-size: 0.98rem;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <div class="container">
-    <h1>Thank You!</h1>
-    <p>Your support means the world. Thanks for helping me grow and keep doing what I love! 💜</p>
+    <h1>💜 Thank You!</h1>
+    <p>
+      Your support means a lot. Thanks for helping me grow and keep building awesome stuff.
+      <span class="accent">You’re the reason this continues.</span>
+    </p>
+
+    <!-- Optional buttons (match the previous page style) -->
+    <div class="buttons">
+      <a class="primary-btn" href="https://t.me/prosnailyt" target="_blank" rel="noopener noreferrer">
+        📢 Join My Telegram Channel
+      </a>
+      <a href="https://www.youtube.com/@snail_is_slow" target="_blank" rel="noopener noreferrer">
+        ▶️ Visit My YouTube Channel
+      </a>
+    </div>
   </div>
 
   <div class="footer">
-    Made with ✨ | <a href="#">@snailyt</a>
+    Made with ✨ | <a href="#" aria-label="snailyt profile">@snailyt</a>
   </div>
 
 </body>
