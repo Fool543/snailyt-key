@@ -797,7 +797,7 @@
                 <div class="vip-role">Official VIP Subscription Support</div>
               </div>
             </div>
-            <button class="copy-btn" onclick="copyText('https://t.me/ssmpmaddy')">Copy Link</button>
+            <button class="copy-btn" onclick="copyText('https://t.me/ssmpmaddy')">Open & Copy Link</button>
           </div>
 
           <!-- Contact 2 -->
@@ -809,7 +809,7 @@
                 <div class="vip-role">Official VIP Subscription Support</div>
               </div>
             </div>
-            <button class="copy-btn" onclick="copyText('https://t.me/infinish_10')">Copy Link</button>
+            <button class="copy-btn" onclick="copyText('https://t.me/infinish_10')">Open & Copy Link</button>
           </div>
         </div>
 
@@ -823,7 +823,7 @@
     <div class="box">
       <div class="title">⏳ Please Wait...</div>
       <div class="sub">
-        Preparing your verification link.<br />
+        Verification in progress.<br />
         You will be redirected automatically.
       </div>
 
@@ -899,12 +899,18 @@
     }
 
     function copyText(text) {
-      navigator.clipboard.writeText(text).then(() => {
-        showToast("Copied link: " + text);
-      }).catch(() => {
-        showToast("Copy failed. Please copy manually: " + text);
-      });
-    }
+	// 1) Copy to clipboard
+	navigator.clipboard.writeText(text).then(() => {
+		showToast("Copied + Opening: " + text);
+
+		// 2) Open link automatically
+		window.open(text, "_blank");
+	}).catch(() => {
+		// Fallback: open anyway if copy fails
+		showToast("Copy failed, but opening: " + text);
+		window.open(text, "_blank");
+	});
+	}
 
     // --- Countdown State ---
     // ✅ EDIT #1: countdown matches UI (90 seconds)
