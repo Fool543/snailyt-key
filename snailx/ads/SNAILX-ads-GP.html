@@ -827,7 +827,7 @@
         You will be redirected automatically.
       </div>
 
-      <div class="countdown" id="countdownText">60s</div>
+      <div class="countdown" id="countdownText">15s</div>
 
       <div class="progress-wrap">
         <div class="progress-bar" id="progressBar"></div>
@@ -914,8 +914,8 @@
 
     // --- Countdown State ---
     // ✅ EDIT #1: countdown matches UI (90 seconds)
-    let totalSeconds = 60;
-    let remaining = 60;
+    let totalSeconds = 15;
+    let remaining = 15;
     let timerInterval = null;
 
     // --- Random Checks State ---
@@ -935,7 +935,7 @@
       const checksPlanned = randInt(minChecks, maxChecks);
 
       // Place checks randomly between remaining 8..55 seconds
-      checkpoints = generateSpacedRandomCheckpoints(checksPlanned, 8, 55);
+      checkpoints = generateSpacedRandomCheckpoints(checksPlanned, 3, 12);
 
       // Sort: higher remaining triggers earlier
       checkpoints.sort((a, b) => b - a);
