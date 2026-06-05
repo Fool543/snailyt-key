@@ -22,7 +22,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       color: #fff;
       padding: 20px;
     }
@@ -355,7 +355,7 @@
       background: linear-gradient(90deg, #00ffff, #ff00ff, #00ffff);
       background-size: 200% 200%;
       animation: progressGlow 2.5s ease infinite;
-      transition: width 0.2s linear;
+      transition: width 1s linear;
     }
 
     @keyframes progressGlow {
@@ -371,31 +371,6 @@
 
     body.locked {
       overflow: hidden;
-    }
-
-    /* Hold button */
-    .hold-btn {
-      display: inline-block;
-      margin-top: 12px;
-      background: #222;
-      color: #fff;
-      text-decoration: none;
-      padding: 14px 20px;
-      border-radius: 50px;
-      border: 1px solid #444;
-      font-weight: 800;
-      transition: all 0.2s ease;
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: manipulation;
-      cursor: pointer;
-    }
-
-    .hold-btn:hover {
-      background: #333;
-      color: #00ffff;
-      transform: translateY(-1px);
-      box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
     }
 
     /* ✅ VIP Contact Cards inside overlay */
@@ -718,7 +693,6 @@
     <div class="glow-orb two"></div>
 
     <div class="content">
-      <!-- ✅ KEEP THIS PART SAME (AS YOU REQUESTED) -->
       <h1>💎 Support Developers with VIP</h1>
       <p class="subtitle">
         We work hard to bring you the best tools and updates. The VIP plan helps fund development,
@@ -741,7 +715,7 @@
 
           <div class="vip-item">
             <div class="tick">✅</div>
-            <span><b>120 FPS Unlocked</b><br />Up to Ultra HD in-game for smoother gameplay.</span>
+            <span><b>240 FPS Unlocked</b><br />Up to Ultra HD in-game for smoother gameplay.</span>
           </div>
 
           <div class="vip-item">
@@ -751,6 +725,15 @@
               <b>4K</b> is for the <b>best graphics texture quality</b> and an experience like never before.
             </span>
           </div>
+          
+          <!-- ✅ NEW TURBO GRAPHICS FEATURE ADDED HERE -->
+          <div class="vip-item">
+            <div class="tick">✅</div>
+            <span><b>Turbo Graphics</b><br />
+              Better for low-end pc who want to enjoy HDR graphics at smoother FPS.
+            </span>
+          </div>
+          
         </div>
 
         <div class="vip-note">
@@ -759,7 +742,6 @@
         </div>
       </div>
 
-      <!-- ✅ BUTTONS (YouTube/Telegram removed) -->
       <div class="buttons">
         <a href="#" class="vip-btn" onclick="openVipOverlay(event)">
           ✨ Buy VIP Plan (₹240) Now ✨
@@ -837,31 +819,13 @@
     </div>
   </div>
 
-  <!-- ✅ Random Hold Check Overlay -->
-  <div class="overlay" id="holdOverlay">
-    <div class="box">
-      <div class="title">✅ Continue Check</div>
-      <div class="sub" id="holdMessage">Hold the button for <b>3 seconds</b> to continue.</div>
-
-      <div class="progress-wrap" style="margin-top: 10px;">
-        <div class="progress-bar" id="holdBar" style="width:0%;"></div>
-      </div>
-
-      <div class="hold-btn" id="holdBtn">Press & Hold (3s)</div>
-
-      <div class="small-note" style="margin-top:14px;">
-        Countdown is paused until you complete this step.
-      </div>
-    </div>
-  </div>
-
   <!-- ✅ Toast -->
   <div class="toast" id="toast"></div>
 
   <script>
     const SUPPORT_LINK = "https://fool543.github.io/snailyt-key/snailx/thank/thanks-GP.html";
 
-    // ✅ EDIT #3: close VIP overlay when clicking outside the modal
+    // Close VIP overlay when clicking outside the modal
     document.getElementById("vipOverlay").addEventListener("click", (e) => {
       if (e.target.id === "vipOverlay") closeVipOverlay();
     });
@@ -871,7 +835,7 @@
       document.getElementById("vipOverlay").style.display = "flex";
       document.body.classList.add("locked");
 
-      // ✅ EDIT #2: Safe confetti guard (won't error if CDN blocked)
+      // Safe confetti guard
       if (typeof confetti === "function") {
         confetti({
           particleCount: 120,
@@ -899,78 +863,32 @@
     }
 
     function copyText(text) {
-	// 1) Copy to clipboard
-	navigator.clipboard.writeText(text).then(() => {
-		showToast("Copied + Opening: " + text);
-
-		// 2) Open link automatically
-		window.open(text, "_blank");
-	}).catch(() => {
-		// Fallback: open anyway if copy fails
-		showToast("Copy failed, but opening: " + text);
-		window.open(text, "_blank");
-	});
-	}
+      // 1) Copy to clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        showToast("Copied + Opening: " + text);
+        // 2) Open link automatically
+        window.open(text, "_blank");
+      }).catch(() => {
+        // Fallback: open anyway if copy fails
+        showToast("Copy failed, but opening: " + text);
+        window.open(text, "_blank");
+      });
+    }
 
     // --- Countdown State ---
-    // ✅ EDIT #1: countdown matches UI (90 seconds)
-    let totalSeconds = 15;
+    const totalSeconds = 15;
     let remaining = 15;
     let timerInterval = null;
 
-    // --- Random Checks State ---
-    let checkpoints = [];
-    let nextCheckpointIndex = 0;
-
     function startSupportFlow(e) {
       e.preventDefault();
-
       remaining = totalSeconds;
-      nextCheckpointIndex = 0;
-
-      // ✅ Minimum 4 checks
-      // ✅ Maximum random up to 8 checks
-      const minChecks = 4;
-      const maxChecks = 8;
-      const checksPlanned = randInt(minChecks, maxChecks);
-
-      // Place checks randomly between remaining 8..55 seconds
-      checkpoints = generateSpacedRandomCheckpoints(checksPlanned, 3, 12);
-
-      // Sort: higher remaining triggers earlier
-      checkpoints.sort((a, b) => b - a);
 
       document.getElementById("timerOverlay").style.display = "flex";
       document.body.classList.add("locked");
 
       updateTimerUI();
       startCountdown();
-    }
-
-    function randInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    // ✅ Random intervals but avoids too many checks too close together
-    function generateSpacedRandomCheckpoints(count, minRemaining, maxRemaining) {
-      const picks = [];
-      const minGap = 5; // minimum gap in seconds between checks
-
-      let attempts = 0;
-      while (picks.length < count && attempts < 1000) {
-        attempts++;
-        const value = randInt(minRemaining, maxRemaining);
-
-        const ok = picks.every(v => Math.abs(v - value) >= minGap);
-        if (ok) picks.push(value);
-      }
-
-      // Fallback if spacing couldn't fill enough
-      while (picks.length < count) {
-        picks.push(randInt(minRemaining, maxRemaining));
-      }
-
-      return picks;
     }
 
     function updateTimerUI() {
@@ -986,11 +904,6 @@
       stopCountdown();
 
       timerInterval = setInterval(() => {
-        if (shouldTriggerCheckpoint()) {
-          pauseCountdownForHold();
-          return;
-        }
-
         remaining--;
         updateTimerUI();
 
@@ -1006,90 +919,6 @@
         clearInterval(timerInterval);
         timerInterval = null;
       }
-    }
-
-    function shouldTriggerCheckpoint() {
-      if (nextCheckpointIndex >= checkpoints.length) return false;
-      return remaining === checkpoints[nextCheckpointIndex];
-    }
-
-    function pauseCountdownForHold() {
-      stopCountdown();
-      nextCheckpointIndex++;
-      showRandomHoldOverlay();
-    }
-
-    function showRandomHoldOverlay() {
-      const holdOverlay = document.getElementById("holdOverlay");
-      const holdBar = document.getElementById("holdBar");
-      const holdBtn = document.getElementById("holdBtn");
-      const holdMessage = document.getElementById("holdMessage");
-
-      const messages = [
-        "Hold the button for <b>3 seconds</b> to continue.",
-        "Security check: hold for <b>3 seconds</b>.",
-        "Almost done. Press & hold for <b>3 seconds</b>.",
-        "Quick verify: hold the button for <b>3 seconds</b>."
-      ];
-      holdMessage.innerHTML = messages[Math.floor(Math.random() * messages.length)];
-
-      holdBar.style.width = "0%";
-      holdOverlay.style.display = "flex";
-
-      // Rebind hold button
-      const freshBtn = holdBtn.cloneNode(true);
-      holdBtn.parentNode.replaceChild(freshBtn, holdBtn);
-
-      const requiredHoldMs = 3000;
-      const tickMs = 20;
-      const steps = requiredHoldMs / tickMs;
-
-      let holding = false;
-      let holdProgress = 0;
-      let holdInterval = null;
-
-      function resetHold() {
-        holding = false;
-        holdProgress = 0;
-        holdBar.style.width = "0%";
-        if (holdInterval) clearInterval(holdInterval);
-        holdInterval = null;
-      }
-
-      function startHold() {
-        if (holding) return;
-        holding = true;
-
-        holdInterval = setInterval(() => {
-          holdProgress++;
-          const percent = Math.min((holdProgress / steps) * 100, 100);
-          holdBar.style.width = percent + "%";
-
-          if (percent >= 100) {
-            clearInterval(holdInterval);
-            holdInterval = null;
-
-            holdOverlay.style.display = "none";
-            resetHold();
-            startCountdown();
-          }
-        }, tickMs);
-      }
-
-      function stopHold() {
-        if (!holding) return;
-        resetHold();
-      }
-
-      freshBtn.addEventListener("mousedown", (e) => { e.preventDefault(); startHold(); });
-      freshBtn.addEventListener("mouseup", stopHold);
-      freshBtn.addEventListener("mouseleave", stopHold);
-
-      freshBtn.addEventListener("touchstart", (e) => { e.preventDefault(); startHold(); }, { passive: false });
-      freshBtn.addEventListener("touchend", stopHold);
-      freshBtn.addEventListener("touchcancel", stopHold);
-
-      resetHold();
     }
   </script>
 </body>
